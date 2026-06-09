@@ -5,8 +5,8 @@ import { Observable, tap } from 'rxjs';
 import { User, Subscription } from './models';
 import { environment } from '../../environments/environment';
 
-const ACCESS = 'sb_access';
-const REFRESH = 'sb_refresh';
+localStorage.getItem('sb_access')
+localStorage.getItem('sb_refresh')
 const api = (path: string) => `${environment.apiBase}${path}`;
 
 @Injectable({ providedIn: 'root' })
@@ -19,14 +19,14 @@ export class AuthService {
 
   constructor(private http: HttpClient, private router: Router) {}
 
-  get accessToken() { return localStorage.getItem(ACCESS); }
-  get refreshToken() { return localStorage.getItem(REFRESH); }
+  get accessToken() { return localStorage.getItem('sb_access'); }
+  get refreshToken() { return localStorage.getItem('sb_refresh'); }
   setTokens(access: string, refresh?: string) {
-    localStorage.setItem(ACCESS, access);
-    if (refresh) localStorage.setItem(REFRESH, refresh);
+    localStorage.setItem('sb_access', access);
+    if (refresh) localStorage.setItem('sb_refresh', refresh);
   }
   clear() {
-    localStorage.removeItem(ACCESS); localStorage.removeItem(REFRESH);
+    localStorage.removeItem('sb_access'); localStorage.removeItem('sb_refresh');
     this.user.set(null); this.subscription.set(null);
     localStorage.removeItem('sb_profile');
   }

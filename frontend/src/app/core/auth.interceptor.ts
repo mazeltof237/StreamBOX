@@ -10,9 +10,9 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
   let modified = req;
   const setHeaders: Record<string, string> = {};
   const token = auth.accessToken;
-  if (token && req.url.startsWith('/api')) setHeaders['Authorization'] = `Bearer ${token}`;
+  if (token) setHeaders['Authorization'] = `Bearer ${token}`;
   const profileId = profileSvc.activeProfileId();
-  if (profileId && req.url.startsWith('/api')) setHeaders['X-Profile-Id'] = String(profileId);
+  if (profileId) setHeaders['X-Profile-Id'] = String(profileId);
   if (Object.keys(setHeaders).length) modified = req.clone({ setHeaders });
 
   return next(modified).pipe(
